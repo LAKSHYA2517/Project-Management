@@ -1,8 +1,7 @@
-import {User} from "../model/user.models";
+import { User } from "../model/user.models.js";
 import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
-import { use } from "react";
 import {emailVerificationMailContent, sendEmail} from "../utils/mails.js"
 
 
@@ -10,7 +9,7 @@ const generateAccessAndRefreshTokens=async(userId)=>{
     try{
         const user=await User.findById(userId)
         const accessToken=user.generateAccessToken();
-        const refreshToken=user.generateRefreshTOken();
+        const refreshToken=user.generateRefreshToken();
 
         user.refreshToken=refreshToken
 
@@ -24,7 +23,7 @@ const generateAccessAndRefreshTokens=async(userId)=>{
     }
 }
 
-const registerUser=asyncHandeler(async(req,res)=>{
+const registerUser=asyncHandler(async(req,res)=>{
     const{email,username,password,role}=req.body
 
     const existedUser=await User.findOne({
@@ -32,7 +31,7 @@ const registerUser=asyncHandeler(async(req,res)=>{
     })
 
     if(existedUser){
-        throw new ApiError(409,"User with email or username alredy exsist",[])
+        throw new ApiError(409,"User with email or username already exists")
     }
 
     const user=await User.create({
@@ -62,7 +61,7 @@ const registerUser=asyncHandeler(async(req,res)=>{
     );
 
     const createdUser = await User.findById(user._id).select(
-        "-password - refreshToken -emailVerificationToken -emailVerificationExpiry",
+        "-password -refreshToken -emailVerificationToken -emailVerificationExpiry"
     );
 
     if(!createdUser){

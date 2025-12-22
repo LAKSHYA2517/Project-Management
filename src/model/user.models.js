@@ -1,5 +1,5 @@
 import mongoose ,{Schema} from "mongoose";
-import bycrypt from "bcrypt";
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import crypto from "crypto"
 
@@ -25,7 +25,7 @@ const userSchema=new Schema(
         },
         email:{
             type:String,
-            require:true,
+            required:true,
             unique:true,
             lowercase:true,
             trim:true
@@ -58,7 +58,7 @@ const userSchema=new Schema(
             type:Date,
         }
     },{
-        timeseries:true,
+        timestamps:true,
     },
 );
 
@@ -69,7 +69,7 @@ userSchema.pre("save",async function(next) {
 });
 
 userSchema.methods.isPasswordCorrect=async function(password){
-    return await brcry.compare(password,this.password);
+    return await bcrypt.compare(password,this.password);
 };
 
 userSchema.methods.generateAccessToken=function(){

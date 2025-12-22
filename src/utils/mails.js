@@ -1,9 +1,8 @@
-import e from "cors";
 import Mailgen from "mailgen";
 import nodemailer from "nodemailer"
 
 const sendEmail=async(options)=>{
-    const mailGenerator=new Maingen({
+    const mailGenerator=new Mailgen({
         theme:"default",
         product:{
             name:"Task Manger",
@@ -12,15 +11,15 @@ const sendEmail=async(options)=>{
     })
 
     
-    const emailTextual = mailGenerator.generatePaintext(options.mailgenContent)
+    const emailTextual = mailGenerator.generatePlaintext(options.mailgenContent)
     const emailHtml = mailGenerator.generate(options.mailgenContent)
 
     const transporter=nodemailer.createTransport({
-        host:process.env.MAIL_TRAP_HOST,
-        port:process.env.MAIN_TRAP_PORT,
+        host:process.env.MAILTRAP_SMTP_HOST,
+        port:process.env.MAILTRAP_SMTP_PORT,
         auth:{
-            user:process.env.MAIL_TRAP_USER,
-            pass:process.env.MAIN_TRAP_PASS,
+            user:process.env.MAILTRAP_SMTP_USER,
+            pass:process.env.MAILTRAP_SMTP_PASS,
         }
     })
 

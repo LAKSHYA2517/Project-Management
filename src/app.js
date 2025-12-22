@@ -16,11 +16,29 @@ app.use(cors({
     allowedHeaders:["Content-Type","Authorization"],
 }))
 //import the routes
-import healthCheckRouter from "../src/routes/healthcheck.routes.js"
+import healthCheckRouter from "../src/routes/healthcheck.routes.js";
+import authRouter from "./routes/auth.routes.js";
 
-app.use("   ",healthCheckRouter)
+
+app.use("/api/v1/healthcheck",healthCheckRouter)
+app.use("/api/v1/auth",authRouter)
 
 app.get("/",(req,res)=>{
-    res.send("Hello cutiee!!!!");
+    res.send("Welcome to basecampy!!");
 })
+//AI
+// Global error handling middleware
+app.use((err, req, res, next) => {
+    const statusCode = err.statusCode || 500;
+    const message = err.message || "Something went wrong";
+    
+    res.status(statusCode).json({
+        success: false,
+        statusCode: statusCode,
+        message: message,
+        data: err.data || null,
+        error: message
+    });
+});
+
 export default app
