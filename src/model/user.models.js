@@ -105,4 +105,4 @@ userSchema.methods.generatesTemporaryToken=function(){
         return {unHashedToken,hashedToken,tokenExpiry}
 };
 
-export const User = mongoose.model("User",userSchema)
+export const User = mongoose.model("User",userSchema) 
