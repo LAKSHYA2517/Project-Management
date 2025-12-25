@@ -39,8 +39,6 @@ const sendEmail=async(options)=>{
     }
 }
 
-
-
 const emailVerificationMailContent=(username,
 verificationUrl)=>{
     return{
