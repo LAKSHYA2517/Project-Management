@@ -3,7 +3,7 @@ import { ApiResponse } from "../utils/api-response.js";
 import { ApiError } from "../utils/api-error.js";
 import { asyncHandler } from "../utils/async-handler.js";
 import {emailVerificationMailContent, forgotPasswordMailgenContent, sendEmail} from "../utils/mails.js"
-import {jwt} from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 
 const generateAccessAndRefreshTokens=async(userId)=>{
@@ -167,9 +167,9 @@ const getCurrentUser=asyncHandler(async(req,res)=>{
 })
 
 const verifyEmail=asyncHandler(async(req,res)=>{
-    const {verificationMailContent}=req.params;
+    const {verificationToken}=req.params;
 
-    if(!verificationMailContent){
+    if(!verificationToken){
         throw new ApiError(400,"Email verification token is missing");
     }
 
